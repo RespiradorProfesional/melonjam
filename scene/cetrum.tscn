@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3n28ydcud7da"]
+
+[ext_resource type="PackedScene" uid="uid://um1w1i2rjupg" path="res://assets/3d/Wizard_Staff.glb" id="1_y7eg3"]
+
+[sub_resource type="GDScript" id="GDScript_6seb8"]
+script/source = "extends Node3D
+
+@onready var hbox = $CanvasLayer/HBoxContainer
+
+@export var shoot_marker : Marker3D
+@export var camera_player : Camera3D
+
+var selected_slot = 0  # Aquí guardamos el slot presionado (empezamos con -1 = ninguno)
+var icon_scenes=[]
+var ability_icon = preload(\"res://scene/ui/ability_icon.tscn\")
+func _ready() -> void:
+	for power_name in GlobalDataUser.active_powers:
+		var ability_icon_ins = ability_icon.instantiate()
+		print(power_name)
+		ability_icon_ins.init(power_name)
+		hbox.add_child(ability_icon_ins)
+		icon_scenes.append(ability_icon_ins)
+
+
+func _process(delta):
+	for i in range(1, 9):  # Slots del 1 al 8
+		var action_name = \"slot_\" + str(i)
+		if Input.is_action_just_pressed(action_name):
+			# Comprobamos si el slot existe en active_powers (índice i-1)
+			if i - 1 < GlobalDataUser.active_powers.size():
+				icon_scenes[selected_slot].out_sloth()
+				selected_slot = i-1
+				icon_scenes[i-1].in_sloth()
+				print(\"Slot seleccionado:\", selected_slot)
+			else:
+				print(\"Slot\", i-1, \"no tiene ataque asignado, no se cambia el slot.\")
+	
+	if Input.is_action_just_pressed(\"shoot\"):
+		shoot(load(GlobalDataUser.get_power_meta(GlobalDataUser.active_powers[selected_slot])[\"scene_path\"]))
+
+
+func shoot(projectile_scene: PackedScene):
+	var projectile = projectile_scene.instantiate()
+	# Añadir primero a la escena para evitar errores con global_transform
+	get_tree().current_scene.add_child(projectile)
+	var fire_point = shoot_marker
+	var camera = camera_player
+	projectile.global_transform = fire_point.global_transform
+	var direction = -camera.global_transform.basis.z.normalized()
+	projectile.direction = direction
+"
+
+[node name="Node3D" type="Node3D"]
+script = SubResource("GDScript_6seb8")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.097
+anchor_top = 0.796
+anchor_right = 0.918
+anchor_bottom = 0.977
+offset_left = 0.255997
+offset_top = 0.191956
+offset_right = -0.536011
+offset_bottom = -0.0960083
+
+[node name="Wizard_Staff" parent="." instance=ExtResource("1_y7eg3")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.0937994, 0.0570726, 0.190117)

@@ -1,0 +1,140 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5yrrinahnifx"]
+
+[ext_resource type="Texture2D" uid="uid://cxgupxk0imm2y" path="res://icon.svg" id="1_mytgs"]
+
+[sub_resource type="GDScript" id="GDScript_vcboc"]
+script/source = "extends Control
+
+@export var ability_name : String
+var active_texture = preload(\"res://assets/ui/circle_yellow.png\")
+var inactive_texture = preload(\"res://assets/ui/circle.png\")
+
+func _ready() -> void:
+	init()
+
+func init():
+	update_textures(GlobalDataUser.get_power_level(ability_name))
+	var data = GlobalDataUser.get_power_data(ability_name)
+	if data.has(\"upgrade_item\"):
+		generate_upgrade_labels(data[\"upgrade_item\"], $UpgradeContainer)
+
+
+
+# Llama a esta función pasando el número de activos que quieres mostrar
+func update_textures(active_count: int) -> void:
+	var index := 0
+	for child in $HBoxContainer.get_children():
+		if child is TextureRect:
+			if index < active_count:
+				child.texture = active_texture
+			else:
+				child.texture = inactive_texture
+			index += 1
+
+func generate_upgrade_labels(upgrade_data: Array, parent: Node) -> void:
+	# Limpia los labels anteriores si el contenedor ya tiene hijos
+	for child in parent.get_children():
+		child.queue_free()
+
+	# Recorre cada item de la lista de upgrade_item
+	for item in upgrade_data:
+		var label = Label.new()
+		label.text = \"%s x%d\" % [item[\"type\"].capitalize(), item[\"amount\"]]
+		parent.add_child(label)
+
+
+func _on_button_pressed() -> void:
+	
+	GlobalDataUser.upgrade_power_level(ability_name)
+"
+
+[node name="Control" type="Control"]
+custom_minimum_size = Vector2(174, 267)
+layout_mode = 3
+anchor_left = 0.044
+anchor_top = 0.034
+anchor_right = 0.195
+anchor_bottom = 0.446
+offset_left = 0.311996
+offset_top = -0.0320015
+offset_right = 0.359985
+offset_bottom = -0.00799561
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_vcboc")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 2.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.446777, 0.446777, 0.446777, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 131.0
+offset_right = 159.0
+offset_bottom = 158.0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+expand_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+expand_mode = 1
+
+[node name="TextureRect4" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+expand_mode = 1
+
+[node name="TextureRect5" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+expand_mode = 1
+
+[node name="TextureRect6" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+expand_mode = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.015
+anchor_bottom = 0.228
+offset_left = 69.0
+offset_top = 216.0
+offset_right = 110.185
+offset_bottom = 187.892
+
+[node name="UpgradeContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 165.0
+offset_right = 152.0
+offset_bottom = 208.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 18.0
+offset_right = 130.0
+offset_bottom = 102.0
+texture = ExtResource("1_mytgs")
+expand_mode = 1
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

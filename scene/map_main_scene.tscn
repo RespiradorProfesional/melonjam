@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dohqbrg5yovkv"]
+
+[ext_resource type="PackedScene" uid="uid://bvwx2mqgnmsgx" path="res://scene/interactable/book.tscn" id="1_xegmm"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6khb5"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_6khb5"]
+points = PackedVector3Array(1.01587, 0.015873, 1.01587, -1.01587, -0.015873, -1.01587, -1.01587, 0.015873, -1.01587, 1.01587, -0.015873, -1.01587, -1.01587, -0.015873, 1.01587, -1.01587, 0.015873, 1.01587, 1.01587, 0.015873, -1.01587, 1.01587, -0.015873, 1.01587)
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(0.992923, 0, 0, 0, 0.992923, 0, 0, 0, 0.992923, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(26.2674, 0, 0, 0, 0.770069, 0, 0, 0, 22.4041, 0, 0, 0)
+mesh = SubResource("PlaneMesh_6khb5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_6khb5")
+
+[node name="Node3D" parent="." instance=ExtResource("1_xegmm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.0712, 0, 0)

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://djqqup8xyx51g"]
+
+[ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_fjfyr"]
+
+[sub_resource type="GDScript" id="GDScript_fjfyr"]
+script/source = "extends Ability_base
+"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_fjfyr"]
+
+[node name="Node3D" instance=ExtResource("1_fjfyr")]
+script = SubResource("GDScript_fjfyr")
+power_name = "basic_projectile"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0"]
+shape = SubResource("SphereShape3D_fjfyr")

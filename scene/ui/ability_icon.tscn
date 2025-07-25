@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0cdgqt2j160b"]
+
+[ext_resource type="Texture2D" uid="uid://cxgupxk0imm2y" path="res://icon.svg" id="1_1g658"]
+
+[sub_resource type="GDScript" id="GDScript_1g658"]
+script/source = "extends Control
+
+var ability_name
+
+func init(ability_name):
+	self.ability_name=ability_name
+	var meta_data= GlobalDataUser.get_power_meta(ability_name)
+	print(ability_name)
+
+func in_sloth():
+	print(\"in \"+ability_name)
+
+func out_sloth():
+	print(\"out \"+ ability_name)
+
+func modify():
+	pass
+
+func use(cooldown):
+	pass
+"
+
+[node name="Control" type="Control"]
+custom_minimum_size = Vector2(170, 133)
+layout_mode = 3
+anchor_right = 0.148
+anchor_bottom = 0.205
+offset_right = -0.496002
+offset_bottom = 0.159988
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_1g658")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = -1.0
+offset_right = 148.0
+offset_bottom = 127.0
+texture = ExtResource("1_1g658")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_right = 164.0
+offset_bottom = 131.0
+fill_mode = 3
+
+[node name="Timer" type="Timer" parent="."]
