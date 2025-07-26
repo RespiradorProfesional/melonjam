@@ -18,7 +18,7 @@ var current_player = null
 # Toma como parámetro al jugador con el que interactua.
 func interact(_player):
 	pass
-
+ 
 func detach():
 	pass
 

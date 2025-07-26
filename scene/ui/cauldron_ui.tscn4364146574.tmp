@@ -1,0 +1,182 @@
+[gd_scene load_steps=6 format=3 uid="uid://p74a227k2sxa"]
+
+[ext_resource type="PackedScene" uid="uid://ijabu3llcbq8" path="res://scene/ui/choose_stone_ui.tscn" id="1_34niv"]
+[ext_resource type="Texture2D" uid="uid://d3c00at03tpq4" path="res://assets/ui/stones/stone_fire.png" id="2_46jo2"]
+[ext_resource type="Texture2D" uid="uid://dtwrdctfjirte" path="res://assets/ui/stones/stone_water.png" id="3_jg8uj"]
+[ext_resource type="Texture2D" uid="uid://bu8bqpjyo6cmu" path="res://assets/ui/stones/stone_air.png" id="4_anvdu"]
+
+[sub_resource type="GDScript" id="GDScript_46jo2"]
+script/source = "extends Control
+
+@onready var label_fire: Label = $hbox_fire/Label_fire
+@onready var label_wind: Label = $hbox_wind/Label_wind
+@onready var label_water: Label = $hbox_water/Label_water
+@onready var icon_fire: TextureRect = $hbox_fire/Icon_fire
+@onready var icon_wind: TextureRect = $hbox_wind/Icon_wind
+@onready var icon_water: TextureRect = $hbox_water/Icon_water
+
+@onready var texture_ability: TextureRect = $Texture_ability
+@onready var label_ability: Label = $Label_ability
+
+@onready var fire_stone: Control = $HBoxContainer/fire_stone
+@onready var wind_stone: Control = $HBoxContainer/wind_stone
+@onready var water_stone: Control = $HBoxContainer/water_stone
+
+
+func _ready() -> void:
+	init()
+
+func init():
+	label_fire.text=str(GlobalDataUser.fire_amount)
+	label_water.text=str(GlobalDataUser.water_amount)
+	label_wind.text=str(GlobalDataUser.wind_amount)
+	icon_fire.texture=load(\"res://assets/ui/stones/stone_fire.png\")
+	icon_wind.texture=load(\"res://assets/ui/stones/stone_air.png\")
+	icon_water.texture=load(\"res://assets/ui/stones/stone_water.png\")
+	
+	self.visible=true
+	
+
+
+func _on_cancel_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_mix_pressed() -> void:
+	var power_upgrade = GlobalDataUser.get_most_demanding_upgrade_power(fire_stone.actual_amount,wind_stone.actual_amount,water_stone.actual_amount)
+	print(power_upgrade)
+	if(power_upgrade !=\"\"):
+		var upgrade = GlobalDataUser.try_upgrade_power(power_upgrade)
+		print(upgrade)
+		if (upgrade):
+			update()
+
+func update():
+	label_fire.text=str(GlobalDataUser.fire_amount)
+	label_water.text=str(GlobalDataUser.water_amount)
+	label_wind.text=str(GlobalDataUser.wind_amount)
+
+
+func _on_change() -> void:
+	var power_upgrade = GlobalDataUser.get_most_demanding_upgrade_power(fire_stone.actual_amount,wind_stone.actual_amount,water_stone.actual_amount)
+	print(power_upgrade)
+	texture_ability.texture= load(GlobalDataUser.get_power_meta(power_upgrade)[\"icon_path\"])
+"
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_46jo2")
+
+[node name="Texture_ability" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 524.0
+offset_top = 30.0
+offset_right = 624.0
+offset_bottom = 130.0
+expand_mode = 1
+
+[node name="Label_ability" type="Label" parent="."]
+layout_mode = 0
+offset_left = 689.0
+offset_top = 88.0
+offset_right = 729.0
+offset_bottom = 111.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 138.0
+offset_top = 199.0
+offset_right = 961.0
+offset_bottom = 554.0
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="fire_stone" parent="HBoxContainer" instance=ExtResource("1_34niv")]
+layout_mode = 2
+stone_name = "fire"
+texture = ExtResource("2_46jo2")
+
+[node name="water_stone" parent="HBoxContainer" instance=ExtResource("1_34niv")]
+layout_mode = 2
+stone_name = "water"
+texture = ExtResource("3_jg8uj")
+
+[node name="wind_stone" parent="HBoxContainer" instance=ExtResource("1_34niv")]
+layout_mode = 2
+stone_name = "wind"
+texture = ExtResource("4_anvdu")
+
+[node name="hbox_fire" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 331.0
+offset_top = 509.0
+offset_right = 376.0
+offset_bottom = 549.0
+
+[node name="Label_fire" type="Label" parent="hbox_fire"]
+layout_mode = 2
+
+[node name="Icon_fire" type="TextureRect" parent="hbox_fire"]
+custom_minimum_size = Vector2(40, 20)
+layout_mode = 2
+expand_mode = 1
+
+[node name="hbox_wind" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 604.0
+offset_top = 519.0
+offset_right = 649.0
+offset_bottom = 559.0
+
+[node name="Label_wind" type="Label" parent="hbox_wind"]
+layout_mode = 2
+
+[node name="Icon_wind" type="TextureRect" parent="hbox_wind"]
+custom_minimum_size = Vector2(40, 20)
+layout_mode = 2
+expand_mode = 1
+
+[node name="hbox_water" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 863.0
+offset_top = 488.0
+offset_right = 908.0
+offset_bottom = 528.0
+
+[node name="Label_water" type="Label" parent="hbox_water"]
+layout_mode = 2
+
+[node name="Icon_water" type="TextureRect" parent="hbox_water"]
+custom_minimum_size = Vector2(40, 20)
+layout_mode = 2
+expand_mode = 1
+
+[node name="mix" type="Button" parent="."]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 0
+offset_left = 523.0
+offset_top = 400.0
+offset_right = 723.0
+offset_bottom = 450.0
+text = "Mix"
+
+[node name="cancel" type="Button" parent="."]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 0
+offset_left = 523.0
+offset_top = 457.0
+offset_right = 723.0
+offset_bottom = 507.0
+text = "Cancel"
+
+[connection signal="change" from="HBoxContainer/fire_stone" to="." method="_on_change"]
+[connection signal="change" from="HBoxContainer/water_stone" to="." method="_on_change"]
+[connection signal="change" from="HBoxContainer/wind_stone" to="." method="_on_change"]
+[connection signal="pressed" from="mix" to="." method="_on_mix_pressed"]
+[connection signal="pressed" from="cancel" to="." method="_on_cancel_pressed"]

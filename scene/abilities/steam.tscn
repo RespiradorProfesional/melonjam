@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://c70l6btgj50p2"]
+
+[ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_kvavk"]
+
+[sub_resource type="GDScript" id="GDScript_kvavk"]
+script/source = "extends Ability_base
+
+@onready var gpu_particles_3d: GPUParticles3D = $GPUParticles3D
+var enemies_in=[]
+
+func custom_ready():
+	gpu_particles_3d.emitting = true
+
+func custom_process():
+	for enemy in enemies_in:
+		if is_instance_valid(enemy):
+			enemy.damaged(global_position, damage, knockback_strength, false)
+
+func _on_hit_box_body_entered(body: Node3D) -> void:
+	if body is Enemy and body not in enemies_in:
+		enemies_in.append(body)
+
+func _on_hit_box_body_exited(body: Node3D) -> void:
+	if body is Enemy and body in enemies_in:
+		enemies_in.erase(body)
+"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kvavk"]
+radius = 4.73405
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kvavk"]
+lifetime_randomness = 0.13
+emission_shape = 1
+emission_sphere_radius = 5.63
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -41.38
+linear_accel_max = -5.75
+hue_variation_min = -0.28
+hue_variation_max = 0.18
+
+[sub_resource type="SphereMesh" id="SphereMesh_qq401"]
+radius = 2.0
+height = 7.0
+radial_segments = 4
+rings = 3
+
+[node name="Node3D" instance=ExtResource("1_kvavk")]
+script = SubResource("GDScript_kvavk")
+speed = 0.0
+power_name = "steam"
+
+[node name="HitBox" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -13.0655)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.94121, 0)
+shape = SubResource("SphereShape3D_kvavk")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.24903, -13.0655)
+emitting = false
+amount = 20
+lifetime = 3.4
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_kvavk")
+draw_pass_1 = SubResource("SphereMesh_qq401")

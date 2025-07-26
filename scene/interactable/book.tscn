@@ -1,20 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvwx2mqgnmsgx"]
+[gd_scene load_steps=5 format=3 uid="uid://bvwx2mqgnmsgx"]
+
+[ext_resource type="PackedScene" uid="uid://bk2flfk184ghq" path="res://assets/3d/Book.glb" id="1_i33r8"]
+[ext_resource type="PackedScene" uid="uid://cctvw16owb0x5" path="res://assets/3d/Table.glb" id="2_hsw28"]
 
 [sub_resource type="GDScript" id="GDScript_jy3yw"]
 script/source = "extends Interactable
+
+var interface_ins
+func interact(player):
+	current_player = player
+	current_player.set_state(Player.PlayerState.INTERACTING)
+	interface_ins = load(\"res://scene/ui/book_ui.tscn\").instantiate()
+	add_child(interface_ins)
+	pass
+	
+	
+
+
+func detach():
+	current_player.set_state(Player.PlayerState.FREE)
+	interface_ins.queue_free()
 "
 
-[sub_resource type="BoxMesh" id="BoxMesh_jy3yw"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_jy3yw"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_i33r8"]
+size = Vector3(1.97266, 0.863281, 1.05481)
 
 [node name="Node3D" type="Node3D"]
 script = SubResource("GDScript_jy3yw")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_jy3yw")
+[node name="Book2" parent="." instance=ExtResource("1_i33r8")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.236232, 0.783722, 0.0256163)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+[node name="Table2" parent="." instance=ExtResource("2_hsw28")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.442091, 0, -0.146887)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("BoxShape3D_jy3yw")
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.486328, 0.40332, 0.0274048)
+shape = SubResource("BoxShape3D_i33r8")

@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://coc18a44rrwiw"]
+
+[ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_ab20r"]
+
+[sub_resource type="GDScript" id="GDScript_ab20r"]
+script/source = "extends Ability_base
+
+func custom_ready():
+	pass
+
+
+func _on_hit_box_body_entered(body: Node3D) -> void:
+	if body is Enemy:
+		body.damaged(global_position,damage,knockback_strength,false)
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ab20r"]
+size = Vector3(1, 1, 55.9016)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ab20r"]
+
+[node name="Node3D" instance=ExtResource("1_ab20r")]
+script = SubResource("GDScript_ab20r")
+speed = 0.0
+power_name = "black_laser"
+
+[node name="HitBox" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -64.3855)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.328664, 33.8565)
+shape = SubResource("BoxShape3D_ab20r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 56.1837, 0, 0.38921, -30.3962)
+mesh = SubResource("BoxMesh_ab20r")

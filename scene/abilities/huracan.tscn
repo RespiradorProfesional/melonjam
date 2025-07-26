@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://dl6ns4frh8q8l"]
+
+[ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_gd4wq"]
+
+[sub_resource type="GDScript" id="GDScript_gd4wq"]
+script/source = "extends Ability_base
+
+@onready var gpu_particles_3d: GPUParticles3D = $GPUParticles3D
+
+func custom_ready():
+	gpu_particles_3d.emitting = true
+
+func _on_hit_box_body_entered(body: Node3D) -> void:
+	if body is Enemy:
+		body.damaged(global_position,damage,knockback_strength,true)
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gd4wq"]
+size = Vector3(3.31433, 1.74402, 3.3338)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gd4wq"]
+lifetime_randomness = 0.5
+emission_shape = 3
+emission_box_extents = Vector3(1.7, 1, 1)
+direction = Vector3(0, 0, 0)
+spread = 62.678
+initial_velocity_max = 12.88
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gd4wq"]
+
+[node name="Node3D" instance=ExtResource("1_gd4wq")]
+script = SubResource("GDScript_gd4wq")
+speed = 0.0
+power_name = "huracan"
+knockback_strength = 100
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0453491, 0.372009, 0.0289663)
+shape = SubResource("BoxShape3D_gd4wq")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0875142, 0.392204, -0.0427275)
+emitting = false
+amount = 100
+lifetime = 1.57
+one_shot = true
+explosiveness = 0.95
+process_material = SubResource("ParticleProcessMaterial_gd4wq")
+draw_pass_1 = SubResource("PlaneMesh_gd4wq")

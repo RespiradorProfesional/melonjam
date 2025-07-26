@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://qgndxw1fae4f"]
+
+[ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_j0ouw"]
+[ext_resource type="PackedScene" uid="uid://c8bujoyq0m74d" path="res://assets/3d/particles/black_laser.glb" id="2_otqdb"]
+
+[sub_resource type="GDScript" id="GDScript_j0ouw"]
+script/source = "extends Ability_base
+
+@onready var gpu_particles_3d: GPUParticles3D = $GPUParticles3D
+
+func scale():
+	hit_box.scale = Vector3.ONE * area
+	$MeshInstance3D.scale = Vector3.ONE * area
+	$GPUParticles3D.scale = Vector3.ONE * area
+	pass
+
+
+func custom_ready():
+	gpu_particles_3d.emitting = true
+
+func _on_hit_box_body_entered(body: Node3D) -> void:
+	if body is Enemy:
+		body.damaged(global_position,damage,knockback_strength,true)
+"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_otqdb"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j0ouw"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+gravity = Vector3(0, 0, 2)
+
+[sub_resource type="SphereMesh" id="SphereMesh_otqdb"]
+radius = 0.05
+height = 0.1
+radial_segments = 4
+rings = 3
+
+[node name="Node3D" instance=ExtResource("1_j0ouw")]
+script = SubResource("GDScript_j0ouw")
+power_name = "wind_spear"
+knockback_strength = 10
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0.00816809, 0.999967, 0, -0.999967, 0.00816809, -0.163742, 0, 0)
+shape = SubResource("CapsuleShape3D_otqdb")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="2"]
+amount = 200
+lifetime = 1.25
+process_material = SubResource("ParticleProcessMaterial_j0ouw")
+draw_pass_1 = SubResource("SphereMesh_otqdb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="black_laser2" parent="." index="4" instance=ExtResource("2_otqdb")]
+transform = Transform3D(0.1, 0, 0, 0, -0.1, 1.50996e-08, 0, -1.50996e-08, -0.1, -0.164847, 0, -0.92177)

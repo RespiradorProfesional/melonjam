@@ -1,9 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://djqqup8xyx51g"]
+[gd_scene load_steps=5 format=3 uid="uid://djqqup8xyx51g"]
 
 [ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_fjfyr"]
+[ext_resource type="PackedScene" uid="uid://b8jvt0780ngii" path="res://assets/3d/particles/flare.glb" id="2_gyeba"]
 
 [sub_resource type="GDScript" id="GDScript_fjfyr"]
 script/source = "extends Ability_base
+
+
+func _on_hit_box_body_entered(body: Node3D) -> void:
+	if body is Enemy:
+		body.damaged(global_position,damage,knockback_strength,true)
+		queue_free()
 "
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_fjfyr"]
@@ -14,3 +21,6 @@ power_name = "basic_projectile"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0"]
 shape = SubResource("SphereShape3D_fjfyr")
+
+[node name="flare2" parent="." index="2" instance=ExtResource("2_gyeba")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.0143209, -0.22262, -0.00407553)

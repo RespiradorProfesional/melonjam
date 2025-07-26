@@ -1,11 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://ix3oqybm0ihu"]
+[gd_scene load_steps=6 format=3 uid="uid://ix3oqybm0ihu"]
 
 [ext_resource type="PackedScene" uid="uid://dohqbrg5yovkv" path="res://scene/map_main_scene.tscn" id="1_wgwml"]
 [ext_resource type="PackedScene" uid="uid://c25vw82fm2k5h" path="res://scene/player.tscn" id="2_ry1uq"]
+[ext_resource type="PackedScene" uid="uid://dl5sy47tmvybx" path="res://scene/enemies/gnome_base.tscn" id="3_fb1ex"]
+[ext_resource type="PackedScene" uid="uid://bvwx2mqgnmsgx" path="res://scene/interactable/book.tscn" id="4_x5n27"]
+[ext_resource type="PackedScene" uid="uid://cjltvpbwxjjmw" path="res://scene/calderon.tscn" id="5_jsie2"]
 
 [node name="Node3D" type="Node3D"]
 
 [node name="map" parent="." instance=ExtResource("1_wgwml")]
 
-[node name="CharacterBody3D" parent="map" instance=ExtResource("2_ry1uq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.70361, 0)
+[node name="player" parent="." instance=ExtResource("2_ry1uq")]
+transform = Transform3D(0.992923, 0, 0, 0, 0.992923, 0, 0, 0, 0.992923, 13.4435, 6.65617, 0)
+
+[node name="enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_fb1ex")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5897, 0, -13.9225)
+player = NodePath("../player")
+
+[node name="Node3D" parent="." instance=ExtResource("4_x5n27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.0712, 0, 0)
+
+[node name="Calderon" parent="." instance=ExtResource("5_jsie2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.3474, 0, 0)

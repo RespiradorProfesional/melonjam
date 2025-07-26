@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=3 uid="uid://ijabu3llcbq8"]
+
+[sub_resource type="GDScript" id="GDScript_0x673"]
+script/source = "extends Control
+
+@export var stone_name : String
+@export var texture : Texture
+@onready var texture_rect: TextureRect = $HBoxContainer/TextureRect
+@onready var label_actual: Label = $HBoxContainer/Label_actual
+
+var actual_amount = 0
+signal change()
+
+func _ready() -> void:
+	texture_rect.texture=texture
+	label_actual.text = str(actual_amount)
+
+
+func _on_minus_pressed() -> void:
+	if actual_amount <= 0:
+		return
+	change.emit()
+	actual_amount-=1
+	label_actual.text = str(actual_amount)
+
+
+func _on_plus_pressed() -> void:
+	if actual_amount >= GlobalDataUser.get_actual_amount_element(stone_name):
+		return
+	change.emit()
+	actual_amount+=1
+	label_actual.text = str(actual_amount)
+"
+
+[node name="Control" type="Control"]
+custom_minimum_size = Vector2(150, 135)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -5.0
+offset_right = -1002.0
+offset_bottom = -518.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_0x673")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+expand_mode = 1
+
+[node name="Label_actual" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "0"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="plus" type="Button" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="minus" type="Button" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/plus" to="." method="_on_plus_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/minus" to="." method="_on_minus_pressed"]

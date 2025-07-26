@@ -1,25 +1,28 @@
 extends Node
-var fire_amount=0
-var wind_amount=0
-var water_amount=0
+var fire_amount=10
+var wind_amount=10
+var water_amount=1000
 
-var active_powers=["basic_projectile","flare","steam"]
+
+
+
+var active_powers=["basic_projectile","steam","flare","huracan","black_laser","wind_spear","fire_tornado","water_shoot"]
 var powers_and_level = [
 	{"power": "basic_projectile", "level": 1},
-	{"power": "flare", "level": 0},
-	{"power": "wind_spear", "level": 0},
-	{"power": "water_shoot", "level": 0},
-	{"power": "steam", "level": 0},
-	{"power": "fire_tornado", "level": 0},
-	{"power": "huracan", "level": 0},
-	{"power": "black_laser", "level": 0}
+	{"power": "flare", "level": 1},
+	{"power": "wind_spear", "level": 1},
+	{"power": "water_shoot", "level": 1},
+	{"power": "steam", "level": 1},
+	{"power": "fire_tornado", "level": 1},
+	{"power": "huracan", "level": 1},
+	{"power": "black_laser", "level": 1}
 ]
 
 
 var powers_data = {
 	"basic_projectile": {
-		1: {"damage": 15, "cooldown": 2.0, "projectile_duration": 1.0, "area": 1.0, "upgrade_item": [{"type": "fire", "amount": 2}]},
-		2: {"damage": 20, "cooldown": 1.9, "projectile_duration": 1.1, "area": 1.1, "upgrade_item": [{"type": "water", "amount": 5}]},
+		1: {"damage": 15, "cooldown": 3.0, "projectile_duration": 1.0, "area": 100.0, "upgrade_item": [{"type": "fire", "amount": 2}]},
+		2: {"damage": 20, "cooldown": 1, "projectile_duration": 1.1, "area": 100.1, "upgrade_item": [{"type": "water", "amount": 5}]},
 		3: {"damage": 25, "cooldown": 1.8, "projectile_duration": 1.2, "area": 1.2, "upgrade_item": [{"type": "wind", "amount": 7}]},
 		4: {"damage": 32, "cooldown": 1.7, "projectile_duration": 1.3, "area": 1.3, "upgrade_item": [{"type": "fire", "amount": 10}]},
 		5: {"damage": 40, "cooldown": 1.5, "projectile_duration": 1.4, "area": 1.4, "upgrade_item": [{"type": "water", "amount": 15}]},
@@ -36,7 +39,7 @@ var powers_data = {
 	},
 	"wind_spear": {
 		0: {"upgrade_item": [{"type": "wind", "amount": 3}]},
-		1: {"damage": 12, "cooldown": 1.8, "projectile_duration": 1.2, "area": 1.0, "upgrade_item": [{"type": "wind", "amount": 5}]},
+		1: {"damage": 12, "cooldown": 1.8, "projectile_duration": 1.2, "area": 100.0, "upgrade_item": [{"type": "wind", "amount": 5}]},
 		2: {"damage": 18, "cooldown": 1.6, "projectile_duration": 1.3, "area": 1.1, "upgrade_item": [{"type": "wind", "amount": 7}]},
 		3: {"damage": 24, "cooldown": 1.4, "projectile_duration": 1.4, "area": 1.2, "upgrade_item": [{"type": "wind", "amount": 10}]},
 		4: {"damage": 32, "cooldown": 1.2, "projectile_duration": 1.5, "area": 1.3, "upgrade_item": [{"type": "wind", "amount": 13}]},
@@ -161,41 +164,48 @@ var powers_data = {
 var powers_meta = {
 	"basic_projectile":{
 		"scene_path": "res://scene/abilities/basic_projectile.tscn",
-		"icon_path": "res://icons/flare.png"
+		"icon_path": "res://assets/ui/abilities_icon/basic_projectile.png"
 	},
 	"flare": {
+		"scene_path": "res://scene/abilities/flare.tscn",
+		"icon_path": "res://assets/ui/abilities_icon/flare.png"
 	},
 	"wind_spear": {
-		"scene_path": "res://powers/wind_spear.tscn",
-		"icon_path": "res://icons/wind_spear.png"
+		"scene_path": "res://scene/abilities/wind_spear.tscn",
+		"icon_path": "res://assets/ui/abilities_icon/wind_spear.png"
 	},
 	"water_shoot": {
-		"scene_path": "res://powers/water_shoot.tscn",
-		"icon_path": "res://icons/water_shoot.png"
+		"scene_path":"res://scene/abilities/water_shoot.tscn" ,
+		"icon_path": "res://assets/ui/abilities_icon/water_shoot.png"
 	},
 	"steam": {
-		"scene_path": "res://powers/steam.tscn",
-		"icon_path": "res://icons/steam.png"
+		"scene_path":"res://scene/abilities/steam.tscn",
+		"icon_path": "res://assets/ui/abilities_icon/steam.png"
 	},
 	"fire_tornado": {
-		"scene_path": "res://powers/fire_tornado.tscn",
-		"icon_path": "res://icons/fire_tornado.png"
+		"scene_path": "res://scene/abilities/fire_tornado.tscn",
+		"icon_path":"res://assets/ui/abilities_icon/fire_tornado.png"
 	},
 	"huracan": {
-		"scene_path": "res://powers/huracan.tscn",
-		"icon_path": "res://icons/huracan.png"
+		"scene_path": "res://scene/abilities/huracan.tscn",
+		"icon_path":"res://assets/ui/abilities_icon/huracan.png"
 	},
 	"black_laser": {
-		"scene_path": "res://powers/black_laser.tscn",
-		"icon_path": "res://icons/black_laser.png"
+		"scene_path": "res://scene/abilities/black_laser.tscn",
+		"icon_path":"res://assets/ui/abilities_icon/black_laser.png"
 	}
 }
 
 
+var stone_icon = {
+	"fire":"res://assets/ui/stones/stone_fire.png",
+	"wind":"res://assets/ui/stones/stone_air.png",
+	"water":"res://assets/ui/stones/stone_water.png"
+}
+
+
 func get_power_meta(power_name: String) -> Dictionary:
-	print(power_name)
 	if powers_meta.has(power_name):
-		print(powers_meta[power_name])
 		return powers_meta[power_name]
 	else:
 		push_warning("Poder no encontrado en powers_meta: " + power_name)
@@ -238,12 +248,9 @@ func upgrade_power_level(power_name: String) -> bool:
 			var current_level = item["level"]
 			if current_level < 6:
 				item["level"] += 1
-				print("%s subió al nivel %d" % [power_name, item["level"]])
 				return true
 			else:
-				print("%s ya está al nivel máximo." % power_name)
 				return false
-	print("No se encontró la habilidad: %s" % power_name)
 	return false
 
 func try_upgrade_power(power_name: String) -> bool:
@@ -251,13 +258,11 @@ func try_upgrade_power(power_name: String) -> bool:
 		if power_data["power"] == power_name:
 			var current_level = power_data["level"]
 			if current_level >= 6:
-				print("%s ya está al nivel máximo." % power_name)
 				return false
 			
 			# Obtener los requisitos del próximo nivel
 			var upgrade_info = powers_data[power_name].get(current_level)
 			if upgrade_info == null or not upgrade_info.has("upgrade_item"):
-				print("No hay datos de mejora para %s nivel %d" % [power_name, current_level])
 				return false
 
 			var can_upgrade = true
@@ -274,7 +279,6 @@ func try_upgrade_power(power_name: String) -> bool:
 							can_upgrade = false
 
 			if not can_upgrade:
-				print("No tienes recursos suficientes para subir %s" % power_name)
 				return false
 
 			# Consumir recursos
@@ -289,14 +293,78 @@ func try_upgrade_power(power_name: String) -> bool:
 
 			# Subir nivel
 			power_data["level"] += 1
-			print("%s subió a nivel %d" % [power_name, power_data["level"]])
 
 			# Si subió de 0 a 1, añadirlo a active_powers
 			if power_data["level"] == 1 and not power_name in active_powers:
 				active_powers.append(power_name)
-				print("%s añadido a active_powers" % power_name)
 
 			return true
 
-	print("No se encontró la habilidad: %s" % power_name)
 	return false
+func set_actual_amount_element(name: String, value: int) -> void:
+	match name:
+		"fire":
+			fire_amount = value
+		"wind":
+			wind_amount = value
+		"water":
+			water_amount = value
+		_:
+			push_error("Elemento desconocido: %s" % name)
+			
+func get_actual_amount_element(name: String) -> int:
+	match name:
+		"fire":
+			return fire_amount
+		"wind":
+			return wind_amount
+		"water":
+			return water_amount
+		_:
+			push_error("Elemento desconocido: %s" % name)
+			return -1
+
+func get_most_demanding_upgrade_power(max_fire: int, max_wind: int, max_water: int) -> String:
+	var best_power = ""
+	var highest_cost = -1
+
+	for power_dict in powers_and_level:
+		var power_name = power_dict["power"]
+		var level = power_dict["level"]
+
+		# Ignorar poderes ya al máximo o sin datos de mejora
+		if level >= 6 or not powers_data.has(power_name):
+			continue
+
+		var level_data = powers_data[power_name].get(level, null)
+		if level_data == null or not level_data.has("upgrade_item"):
+			continue
+
+		var upgrade_items = level_data["upgrade_item"]
+		var total_cost = 0
+		var temp_fire = 0
+		var temp_wind = 0
+		var temp_water = 0
+		var can_afford = true
+
+		for req in upgrade_items:
+			match req["type"]:
+				"fire":
+					temp_fire += req["amount"]
+				"wind":
+					temp_wind += req["amount"]
+				"water":
+					temp_water += req["amount"]
+
+		# Validar si podemos permitirnos este poder
+		if temp_fire > max_fire or temp_wind > max_wind or temp_water > max_water:
+			continue
+
+		total_cost = temp_fire + temp_wind + temp_water
+
+		# Guardar si es el más caro que podemos permitir
+		if total_cost > highest_cost:
+			highest_cost = total_cost
+			best_power = power_name
+
+	return best_power

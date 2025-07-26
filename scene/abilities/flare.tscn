@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://cnggxsx5n0qn2"]
+
+[ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_7tx4d"]
+
+[sub_resource type="GDScript" id="GDScript_7tx4d"]
+script/source = "extends Ability_base
+
+@onready var gpu_particles_3d: GPUParticles3D = $GPUParticles3D
+var enemies_in=[]
+
+
+func custom_ready():
+	gpu_particles_3d.emitting = true
+	var material := gpu_particles_3d.process_material as ParticleProcessMaterial
+	material.gravity = direction
+
+func custom_process():
+	for enemy in enemies_in:
+		if is_instance_valid(enemy):
+			enemy.damaged(global_position, damage, knockback_strength, true)
+
+func _on_hit_box_body_entered(body: Node3D) -> void:
+	if body is Enemy and body not in enemies_in:
+		enemies_in.append(body)
+
+func _on_hit_box_body_exited(body: Node3D) -> void:
+	if body is Enemy and body in enemies_in:
+		enemies_in.erase(body)
+"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7tx4d"]
+radius = 0.464218
+height = 1.44631
+
+[sub_resource type="Curve" id="Curve_7tx4d"]
+_data = [Vector2(0, 0), 0.0, 20.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_jxt6x"]
+curve = SubResource("Curve_7tx4d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bq68h"]
+emission_shape = 1
+emission_sphere_radius = 0.2
+gravity = Vector3(0, 0, 0)
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_jxt6x")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7tx4d"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_23tko"]
+material = SubResource("ShaderMaterial_7tx4d")
+radius = 0.05
+height = 0.1
+radial_segments = 4
+rings = 3
+
+[node name="Node3D" instance=ExtResource("1_7tx4d")]
+script = SubResource("GDScript_7tx4d")
+speed = 0.0
+power_name = "flare"
+knockback_strength = 10
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, -0.00228636, -0.999997, 0, 0.999997, -0.00228636, 0, -0.0238185, 0.70028)
+shape = SubResource("CapsuleShape3D_7tx4d")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.633845)
+amount = 200
+lifetime = 1.25
+process_material = SubResource("ParticleProcessMaterial_bq68h")
+draw_pass_1 = SubResource("SphereMesh_23tko")

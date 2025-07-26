@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://bcl0pxgbfybcq"]
+
+[ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_7xkfx"]
+[ext_resource type="Shader" uid="uid://us0rn3anh4le" path="res://fire.gdshader" id="2_u44ei"]
+
+[sub_resource type="GDScript" id="GDScript_u44ei"]
+script/source = "extends Ability_base
+
+@onready var gpu_particles_3d: GPUParticles3D = $GPUParticles3D
+var enemies_in=[]
+
+
+func custom_ready():
+	gpu_particles_3d.emitting = true
+
+func custom_process():
+	for enemy in enemies_in:
+		if is_instance_valid(enemy):
+			enemy.damaged(global_position, damage, knockback_strength, false)
+
+func _on_hit_box_body_entered(body: Node3D) -> void:
+	if body is Enemy and body not in enemies_in:
+		enemies_in.append(body)
+
+func _on_hit_box_body_exited(body: Node3D) -> void:
+	if body is Enemy and body in enemies_in:
+		enemies_in.erase(body)
+"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u44ei"]
+
+[sub_resource type="Curve" id="Curve_u44ei"]
+_data = [Vector2(0.00453515, 0.603923), 0.0, 0.0, 0, 0, Vector2(0.256236, 0), 1.74132, 1.74132, 0, 0, Vector2(0.535147, 0.317556), -1.80904, -1.80904, 0, 0, Vector2(0.761905, 0.541308), -1.73347, -1.73347, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_0m61v"]
+texture_mode = 1
+curve = SubResource("Curve_u44ei")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0m61v"]
+shader = ExtResource("2_u44ei")
+shader_parameter/tangent_velocity = 0.9
+shader_parameter/upward_speed = 1.0
+shader_parameter/base_radius = 1.0
+shader_parameter/profile = SubResource("CurveTexture_0m61v")
+
+[sub_resource type="SphereMesh" id="SphereMesh_u44ei"]
+radius = 0.15
+height = 0.3
+radial_segments = 5
+rings = 3
+
+[node name="Node3D" instance=ExtResource("1_7xkfx")]
+script = SubResource("GDScript_u44ei")
+speed = 1.0
+
+[node name="HitBox" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0382388)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.796871, 0)
+shape = SubResource("CapsuleShape3D_u44ei")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0534077, 0, -0.00947523)
+amount = 700
+lifetime = 3.0
+process_material = SubResource("ShaderMaterial_0m61v")
+draw_pass_1 = SubResource("SphereMesh_u44ei")

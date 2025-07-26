@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjngkfyk2rh3l"]
+
+[ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_w0pcj"]
+[ext_resource type="PackedScene" uid="uid://cbw83ky12wd3d" path="res://assets/3d/particles/wind_spear.glb" id="2_a1faq"]
+
+[sub_resource type="GDScript" id="GDScript_a1faq"]
+script/source = "extends Ability_base
+
+@onready var gpu_particles_3d: GPUParticles3D = $GPUParticles3D
+
+func custom_ready():
+	gpu_particles_3d.emitting = true
+
+func _on_hit_box_body_entered(body: Node3D) -> void:
+	if body is Enemy:
+		body.damaged(global_position,damage,knockback_strength,false)
+"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_a1faq"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r3xp8"]
+lifetime_randomness = 0.13
+emission_shape = 1
+emission_sphere_radius = 0.4
+gravity = Vector3(0, -2, 3)
+hue_variation_min = -0.28
+hue_variation_max = 0.18
+
+[sub_resource type="SphereMesh" id="SphereMesh_lgbbt"]
+radius = 0.15
+height = 0.3
+radial_segments = 4
+rings = 3
+
+[node name="Node3D" instance=ExtResource("1_w0pcj")]
+script = SubResource("GDScript_a1faq")
+power_name = "water_shoot"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0"]
+shape = SubResource("SphereShape3D_a1faq")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0620738, -0.0262665)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_r3xp8")
+draw_pass_1 = SubResource("SphereMesh_lgbbt")
+
+[node name="wind_spear2" parent="." index="3" instance=ExtResource("2_a1faq")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.00540292, 0, -0.0252513)

@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjltvpbwxjjmw"]
+
+[ext_resource type="PackedScene" uid="uid://ddxn7k23epob" path="res://assets/3d/Cauldron.glb" id="1_j232t"]
+
+[sub_resource type="GDScript" id="GDScript_oc6q8"]
+script/source = "extends Interactable
+
+var interface_ins
+func interact(player):
+	current_player = player
+	current_player.set_state(Player.PlayerState.INTERACTING)
+	interface_ins = load(\"res://scene/ui/cauldron_ui.tscn\").instantiate()
+	interface_ins.player = player
+	add_child(interface_ins)
+	pass
+	
+	
+
+
+func detach():
+	current_player.set_state(Player.PlayerState.FREE)
+	interface_ins.queue_free()
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j232t"]
+size = Vector3(5.77875, 5.76965, 6.27594)
+
+[node name="Calderon" type="Node3D"]
+script = SubResource("GDScript_oc6q8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.15845, 0, -0.191913)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.105621, 2.38483, 0.688324)
+shape = SubResource("BoxShape3D_j232t")
+
+[node name="Cauldron2" parent="." instance=ExtResource("1_j232t")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.15845, 0, -0.191913)
