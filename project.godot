@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 GlobalDataUser="*res://script/global_data_user.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/zylann.hterrain/plugin.cfg")
+
 [input]
 
 ui_left={
