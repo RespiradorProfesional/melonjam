@@ -34,14 +34,20 @@ func spawn_enemies():
 	var total_minotaurs = config.get(\"minotaurs\", 0)
 
 	for i in total_gnomes:
-		spawn_enemy(gnome_scene)
+		spawn_enemy(gnome_scene,\"gnome\",config)
 
 	for i in total_minotaurs:
-		spawn_enemy(minotaur_scene)
+		spawn_enemy(minotaur_scene,\"minotaur\",config)
 
-func spawn_enemy(scene: PackedScene):
-	var instance = scene.instantiate()
+func spawn_enemy(scene: PackedScene,type,config):
+	var instance : Enemy = scene.instantiate()
 	instance.player=player
+	# Asignar atributos explícitos
+	instance.hp = config[type+\"_hp\"]
+	instance.SPEED = config[type+\"_speed\"]
+	instance.damamge = config[type+\"_damage\"]
+	instance.knockback_strength = config[type+\"_knockback\"]
+	
 	var marker = markers.pick_random()
 	
 	# Pequeña variación aleatoria de posición para evitar colisiones exactas

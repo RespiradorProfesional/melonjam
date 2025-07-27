@@ -323,30 +323,134 @@ func get_most_demanding_upgrade_power(max_fire: int, max_wind: int, max_water: i
 	return best_power
 
 var world_levels = {
-	0: {"gnomes": 10, "minotaurs": 0, "gnome_hp": 120, "gnome_damage": 10, "gnome_knockback": 1.2, "gnome_speed": 1.5, "minotaur_hp": 0, "minotaur_damage": 0, "minotaur_knockback": 0, "minotaur_speed": 0},
-	1: {"gnomes": 12, "minotaurs": 1, "gnome_hp": 130, "gnome_damage": 12, "gnome_knockback": 1.3, "gnome_speed": 1.5, "minotaur_hp": 250, "minotaur_damage": 35, "minotaur_knockback": 0.8, "minotaur_speed": 1.0},
-	2: {"gnomes": 14, "minotaurs": 2, "gnome_hp": 140, "gnome_damage": 14, "gnome_knockback": 1.4, "gnome_speed": 1.55, "minotaur_hp": 270, "minotaur_damage": 40, "minotaur_knockback": 0.8, "minotaur_speed": 1.05},
-	3: {"gnomes": 15, "minotaurs": 3, "gnome_hp": 150, "gnome_damage": 16, "gnome_knockback": 1.5, "gnome_speed": 1.55, "minotaur_hp": 290, "minotaur_damage": 45, "minotaur_knockback": 0.8, "minotaur_speed": 1.1},
-	4: {"gnomes": 13, "minotaurs": 5, "gnome_hp": 160, "gnome_damage": 18, "gnome_knockback": 1.6, "gnome_speed": 1.6, "minotaur_hp": 310, "minotaur_damage": 50, "minotaur_knockback": 0.75, "minotaur_speed": 1.15},
-	5: {"gnomes": 10, "minotaurs": 7, "gnome_hp": 170, "gnome_damage": 20, "gnome_knockback": 1.7, "gnome_speed": 1.6, "minotaur_hp": 330, "minotaur_damage": 55, "minotaur_knockback": 0.75, "minotaur_speed": 1.2},
-	6: {"gnomes": 8, "minotaurs": 10, "gnome_hp": 185, "gnome_damage": 22, "gnome_knockback": 1.8, "gnome_speed": 1.6, "minotaur_hp": 360, "minotaur_damage": 60, "minotaur_knockback": 0.7, "minotaur_speed": 1.25},
-	7: {"gnomes": 6, "minotaurs": 13, "gnome_hp": 200, "gnome_damage": 24, "gnome_knockback": 1.9, "gnome_speed": 1.65, "minotaur_hp": 390, "minotaur_damage": 65, "minotaur_knockback": 0.7, "minotaur_speed": 1.3},
-	8: {"gnomes": 4, "minotaurs": 16, "gnome_hp": 220, "gnome_damage": 26, "gnome_knockback": 2.0, "gnome_speed": 1.65, "minotaur_hp": 420, "minotaur_damage": 70, "minotaur_knockback": 0.65, "minotaur_speed": 1.35},
-	9: {"gnomes": 2, "minotaurs": 20, "gnome_hp": 240, "gnome_damage": 28, "gnome_knockback": 2.1, "gnome_speed": 1.7, "minotaur_hp": 450, "minotaur_damage": 75, "minotaur_knockback": 0.65, "minotaur_speed": 1.4},
-	10: {"gnomes": 1, "minotaurs": 24, "gnome_hp": 260, "gnome_damage": 30, "gnome_knockback": 2.2, "gnome_speed": 1.75, "minotaur_hp": 470, "minotaur_damage": 78, "minotaur_knockback": 0.6, "minotaur_speed": 1.45},
-	11: {"gnomes": 0, "minotaurs": 28, "gnome_hp": 0, "gnome_damage": 0, "gnome_knockback": 0, "gnome_speed": 0, "minotaur_hp": 490, "minotaur_damage": 82, "minotaur_knockback": 0.6, "minotaur_speed": 1.5},
-	12: {"gnomes": 0, "minotaurs": 30, "gnome_hp": 0, "gnome_damage": 0, "gnome_knockback": 0, "gnome_speed": 0, "minotaur_hp": 500, "minotaur_damage": 85, "minotaur_knockback": 0.55, "minotaur_speed": 1.55},
-	13: {"gnomes": 5, "minotaurs": 30, "gnome_hp": 280, "gnome_damage": 32, "gnome_knockback": 2.3, "gnome_speed": 1.75, "minotaur_hp": 500, "minotaur_damage": 85, "minotaur_knockback": 0.55, "minotaur_speed": 1.6},
-	14: {"gnomes": 10, "minotaurs": 30, "gnome_hp": 280, "gnome_damage": 34, "gnome_knockback": 2.4, "gnome_speed": 1.8, "minotaur_hp": 500, "minotaur_damage": 85, "minotaur_knockback": 0.55, "minotaur_speed": 1.65},
-	15: {"gnomes": 15, "minotaurs": 35, "gnome_hp": 280, "gnome_damage": 36, "gnome_knockback": 2.5, "gnome_speed": 1.85, "minotaur_hp": 500, "minotaur_damage": 90, "minotaur_knockback": 0.5, "minotaur_speed": 1.7},
-	16: {"gnomes": 20, "minotaurs": 38, "gnome_hp": 280, "gnome_damage": 38, "gnome_knockback": 2.6, "gnome_speed": 1.9, "minotaur_hp": 510, "minotaur_damage": 92, "minotaur_knockback": 0.5, "minotaur_speed": 1.75},
-	17: {"gnomes": 22, "minotaurs": 40, "gnome_hp": 280, "gnome_damage": 40, "gnome_knockback": 2.7, "gnome_speed": 1.95, "minotaur_hp": 520, "minotaur_damage": 95, "minotaur_knockback": 0.5, "minotaur_speed": 1.8},
-	18: {"gnomes": 24, "minotaurs": 42, "gnome_hp": 280, "gnome_damage": 42, "gnome_knockback": 2.8, "gnome_speed": 2.0, "minotaur_hp": 530, "minotaur_damage": 98, "minotaur_knockback": 0.45, "minotaur_speed": 1.85},
-	19: {"gnomes": 26, "minotaurs": 45, "gnome_hp": 280, "gnome_damage": 44, "gnome_knockback": 2.9, "gnome_speed": 2.0, "minotaur_hp": 540, "minotaur_damage": 100, "minotaur_knockback": 0.45, "minotaur_speed": 1.9},
-	20: {"gnomes": 30, "minotaurs": 50, "gnome_hp": 280, "gnome_damage": 46, "gnome_knockback": 3.0, "gnome_speed": 2.05, "minotaur_hp": 550, "minotaur_damage": 105, "minotaur_knockback": 0.4, "minotaur_speed": 2.0},
-	21: {"gnomes": 40, "minotaurs": 60, "gnome_hp": 280, "gnome_damage": 48, "gnome_knockback": 3.1, "gnome_speed": 2.1, "minotaur_hp": 560, "minotaur_damage": 110, "minotaur_knockback": 0.4, "minotaur_speed": 2.1},
-	22: {"gnomes": 50, "minotaurs": 75, "gnome_hp": 280, "gnome_damage": 50, "gnome_knockback": 3.2, "gnome_speed": 2.15, "minotaur_hp": 570, "minotaur_damage": 115, "minotaur_knockback": 0.4, "minotaur_speed": 2.2},
-	23: {"gnomes": 60, "minotaurs": 90, "gnome_hp": 280, "gnome_damage": 52, "gnome_knockback": 3.3, "gnome_speed": 2.2, "minotaur_hp": 580, "minotaur_damage": 120, "minotaur_knockback": 0.35, "minotaur_speed": 2.3},
-	24: {"gnomes": 70, "minotaurs": 105, "gnome_hp": 280, "gnome_damage": 54, "gnome_knockback": 3.4, "gnome_speed": 2.25, "minotaur_hp": 590, "minotaur_damage": 125, "minotaur_knockback": 0.35, "minotaur_speed": 2.4},
-	25: {"gnomes": 80, "minotaurs": 120, "gnome_hp": 280, "gnome_damage": 56, "gnome_knockback": 3.5, "gnome_speed": 2.3, "minotaur_hp": 600, "minotaur_damage": 130, "minotaur_knockback": 0.3, "minotaur_speed": 2.5}
-};
+	0: {
+		"gnomes": 10, "minotaurs": 0,
+		"gnome_hp": 100, "gnome_damage": 8, "gnome_knockback": 1.2, "gnome_speed": 4.5,
+		"minotaur_hp": 0, "minotaur_damage": 0, "minotaur_knockback": 0, "minotaur_speed": 0
+	},
+	1: {
+		"gnomes": 12, "minotaurs": 1,
+		"gnome_hp": 110, "gnome_damage": 10, "gnome_knockback": 1.3, "gnome_speed": 4.7,
+		"minotaur_hp": 250, "minotaur_damage": 30, "minotaur_knockback": 0.8, "minotaur_speed": 4.0
+	},
+	2: {
+		"gnomes": 14, "minotaurs": 2,
+		"gnome_hp": 120, "gnome_damage": 12, "gnome_knockback": 1.4, "gnome_speed": 4.9,
+		"minotaur_hp": 270, "minotaur_damage": 35, "minotaur_knockback": 0.8, "minotaur_speed": 4.3
+	},
+	3: {
+		"gnomes": 15, "minotaurs": 3,
+		"gnome_hp": 130, "gnome_damage": 14, "gnome_knockback": 1.5, "gnome_speed": 5.2,
+		"minotaur_hp": 290, "minotaur_damage": 40, "minotaur_knockback": 0.8, "minotaur_speed": 4.5
+	},
+	4: {
+		"gnomes": 13, "minotaurs": 5,
+		"gnome_hp": 140, "gnome_damage": 16, "gnome_knockback": 1.6, "gnome_speed": 5.3,
+		"minotaur_hp": 310, "minotaur_damage": 45, "minotaur_knockback": 0.75, "minotaur_speed": 4.6
+	},
+	5: {
+		"gnomes": 10, "minotaurs": 7,
+		"gnome_hp": 150, "gnome_damage": 18, "gnome_knockback": 1.7, "gnome_speed": 5.4,
+		"minotaur_hp": 330, "minotaur_damage": 50, "minotaur_knockback": 0.75, "minotaur_speed": 4.7
+	},
+	6: {
+		"gnomes": 8, "minotaurs": 10,
+		"gnome_hp": 160, "gnome_damage": 20, "gnome_knockback": 1.8, "gnome_speed": 5.5,
+		"minotaur_hp": 360, "minotaur_damage": 55, "minotaur_knockback": 0.7, "minotaur_speed": 4.8
+	},
+	7: {
+		"gnomes": 6, "minotaurs": 13,
+		"gnome_hp": 170, "gnome_damage": 22, "gnome_knockback": 1.9, "gnome_speed": 5.6,
+		"minotaur_hp": 390, "minotaur_damage": 60, "minotaur_knockback": 0.7, "minotaur_speed": 4.9
+	},
+	8: {
+		"gnomes": 4, "minotaurs": 16,
+		"gnome_hp": 180, "gnome_damage": 24, "gnome_knockback": 2.0, "gnome_speed": 5.8,
+		"minotaur_hp": 420, "minotaur_damage": 65, "minotaur_knockback": 0.65, "minotaur_speed": 5.0
+	},
+	9: {
+		"gnomes": 2, "minotaurs": 20,
+		"gnome_hp": 200, "gnome_damage": 26, "gnome_knockback": 2.1, "gnome_speed": 5.9,
+		"minotaur_hp": 450, "minotaur_damage": 70, "minotaur_knockback": 0.65, "minotaur_speed": 5.2
+	},
+	10: {
+		"gnomes": 2, "minotaurs": 24,
+		"gnome_hp": 210, "gnome_damage": 28, "gnome_knockback": 2.2, "gnome_speed": 6.0,
+		"minotaur_hp": 470, "minotaur_damage": 75, "minotaur_knockback": 0.6, "minotaur_speed": 5.3
+	},
+	11: {
+		"gnomes": 1, "minotaurs": 28,
+		"gnome_hp": 220, "gnome_damage": 30, "gnome_knockback": 2.3, "gnome_speed": 6.1,
+		"minotaur_hp": 490, "minotaur_damage": 78, "minotaur_knockback": 0.6, "minotaur_speed": 5.4
+	},
+	12: {
+		"gnomes": 1, "minotaurs": 30,
+		"gnome_hp": 230, "gnome_damage": 32, "gnome_knockback": 2.4, "gnome_speed": 6.2,
+		"minotaur_hp": 500, "minotaur_damage": 80, "minotaur_knockback": 0.6, "minotaur_speed": 5.5
+	},
+	13: {
+		"gnomes": 3, "minotaurs": 32,
+		"gnome_hp": 240, "gnome_damage": 34, "gnome_knockback": 2.5, "gnome_speed": 6.3,
+		"minotaur_hp": 510, "minotaur_damage": 82, "minotaur_knockback": 0.6, "minotaur_speed": 5.6
+	},
+	14: {
+		"gnomes": 5, "minotaurs": 35,
+		"gnome_hp": 250, "gnome_damage": 36, "gnome_knockback": 2.6, "gnome_speed": 6.4,
+		"minotaur_hp": 520, "minotaur_damage": 84, "minotaur_knockback": 0.55, "minotaur_speed": 5.7
+	},
+	15: {
+		"gnomes": 10, "minotaurs": 40,
+		"gnome_hp": 260, "gnome_damage": 38, "gnome_knockback": 2.7, "gnome_speed": 6.5,
+		"minotaur_hp": 540, "minotaur_damage": 86, "minotaur_knockback": 0.55, "minotaur_speed": 5.8
+	},
+	16: {
+		"gnomes": 15, "minotaurs": 45,
+		"gnome_hp": 270, "gnome_damage": 40, "gnome_knockback": 2.8, "gnome_speed": 6.6,
+		"minotaur_hp": 560, "minotaur_damage": 88, "minotaur_knockback": 0.55, "minotaur_speed": 5.9
+	},
+	17: {
+		"gnomes": 20, "minotaurs": 50,
+		"gnome_hp": 280, "gnome_damage": 42, "gnome_knockback": 2.9, "gnome_speed": 6.7,
+		"minotaur_hp": 580, "minotaur_damage": 90, "minotaur_knockback": 0.5, "minotaur_speed": 6.0
+	},
+	18: {
+		"gnomes": 25, "minotaurs": 55,
+		"gnome_hp": 290, "gnome_damage": 44, "gnome_knockback": 3.0, "gnome_speed": 6.8,
+		"minotaur_hp": 600, "minotaur_damage": 92, "minotaur_knockback": 0.5, "minotaur_speed": 6.1
+	},
+	19: {
+		"gnomes": 30, "minotaurs": 60,
+		"gnome_hp": 300, "gnome_damage": 46, "gnome_knockback": 3.1, "gnome_speed": 6.9,
+		"minotaur_hp": 620, "minotaur_damage": 94, "minotaur_knockback": 0.5, "minotaur_speed": 6.2
+	},
+	20: {
+		"gnomes": 50, "minotaurs": 70,
+		"gnome_hp": 310, "gnome_damage": 48, "gnome_knockback": 3.2, "gnome_speed": 7.0,
+		"minotaur_hp": 640, "minotaur_damage": 96, "minotaur_knockback": 0.5, "minotaur_speed": 6.3
+	},
+	21: {
+		"gnomes": 60, "minotaurs": 80,
+		"gnome_hp": 320, "gnome_damage": 50, "gnome_knockback": 3.3, "gnome_speed": 7.1,
+		"minotaur_hp": 660, "minotaur_damage": 98, "minotaur_knockback": 0.5, "minotaur_speed": 6.4
+	},
+	22: {
+		"gnomes": 70, "minotaurs": 90,
+		"gnome_hp": 330, "gnome_damage": 52, "gnome_knockback": 3.4, "gnome_speed": 7.2,
+		"minotaur_hp": 680, "minotaur_damage": 100, "minotaur_knockback": 0.5, "minotaur_speed": 6.5
+	},
+	23: {
+		"gnomes": 80, "minotaurs": 100,
+		"gnome_hp": 340, "gnome_damage": 54, "gnome_knockback": 3.5, "gnome_speed": 7.3,
+		"minotaur_hp": 700, "minotaur_damage": 102, "minotaur_knockback": 0.5, "minotaur_speed": 6.6
+	},
+	24: {
+		"gnomes": 90, "minotaurs": 110,
+		"gnome_hp": 350, "gnome_damage": 56, "gnome_knockback": 3.6, "gnome_speed": 7.4,
+		"minotaur_hp": 720, "minotaur_damage": 104, "minotaur_knockback": 0.5, "minotaur_speed": 6.7
+	},
+	25: {
+		"gnomes": 100, "minotaurs": 120,
+		"gnome_hp": 360, "gnome_damage": 58, "gnome_knockback": 3.7, "gnome_speed": 7.5,
+		"minotaur_hp": 740, "minotaur_damage": 106, "minotaur_knockback": 0.5, "minotaur_speed": 6.8
+	}
+}
