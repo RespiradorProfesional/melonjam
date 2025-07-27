@@ -16,6 +16,7 @@ var in_battle=false
 var interface_ins
 
 func _ready() -> void:
+	$CanvasLayer/Control.visible=false
 	audio_stream_player.stream = music_in
 	audio_stream_player.playing=true
 
@@ -39,11 +40,17 @@ func interact(player):
 
 
 func _on_game_finish_round() -> void:
+	$CanvasLayer/Control.visible=true
+	$Timer.start()
 	can_use=true
 
 
 func _on_audio_stream_player_finished() -> void:
 	audio_stream_player.playing=true
+
+
+func _on_timer_timeout() -> void:
+	$CanvasLayer/Control.visible=false
 "
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_py58b"]
@@ -64,4 +71,34 @@ shape = SubResource("BoxShape3D_py58b")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = -20.8
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Control"]
+offset_left = 540.0
+offset_top = 398.0
+offset_right = 1387.0
+offset_bottom = 535.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 100
+text = "ROUND FINISHED"
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control"]
+offset_left = 549.0
+offset_top = 540.0
+offset_right = 977.0
+offset_bottom = 595.0
+theme_override_font_sizes/font_size = 40
+text = "Go to the door to rest."
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

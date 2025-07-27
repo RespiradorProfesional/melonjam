@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsg8mrpnf2o5y"]
+[gd_scene load_steps=5 format=3 uid="uid://bsg8mrpnf2o5y"]
 
 [ext_resource type="Script" uid="uid://c2qj3uosbgy5w" path="res://script/enemies/base_enemy.gd" id="1_li2jk"]
 
@@ -13,11 +13,16 @@ inherit_velocity_ratio = 0.321
 direction = Vector3(0, 1, 0)
 spread = 99.643
 
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_li2jk"]
+albedo_color = Color(0.954138, 0.379272, 0.402682, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_x4j0c"]
+material = SubResource("ORMMaterial3D_li2jk")
 size = Vector3(0.1, 0.1, 0.1)
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_li2jk")
+knockback_strength = 3
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 

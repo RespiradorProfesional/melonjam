@@ -1,0 +1,118 @@
+[gd_scene load_steps=5 format=3 uid="uid://c25vw82fm2k5h"]
+
+[ext_resource type="Script" uid="uid://ovjsfi4kix56" path="res://script/player.gd" id="1_hjaqi"]
+[ext_resource type="PackedScene" uid="uid://c3n28ydcud7da" path="res://scene/cetrum.tscn" id="1_xo3ru"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4qnqm"]
+
+[sub_resource type="GDScript" id="GDScript_xo3ru"]
+script/source = "extends RayCast3D
+
+@onready var player = get_parent().get_parent().get_parent()
+@onready var label_name = $label_name
+@onready var label_desc = $label_desc
+var PlayerState
+
+func _ready() -> void:
+	PlayerState=player.PlayerState
+
+func _process(_delta: float) -> void:
+	interactable_detection()
+	#Este bloque de código es para que al estar interactuando no se vea el label
+	if player.state != PlayerState.FREE and (label_name.visible==true or label_desc.visible==true):
+		label_name.visible = false
+		label_desc.visible = false
+
+func interactable_detection():
+	if is_colliding():
+		var hit = get_collider().owner # guardamos el nodo padre de la colisión en variable
+		# Comprobamos si detecta un interactuable
+		if hit is Interactable:
+			if player.current_interactable == null:
+				player.current_interactable = hit # Almacenamos el interactuable en el player
+				# Mostramos su información durante la colisión
+				label_name.visible = true
+				label_desc.visible = true
+				label_name.text = hit.prompt_name
+				label_desc.text = hit.prompt_description
+				return
+			else:
+				return
+	# Dejamos de mostrar en caso de perder la colisión
+	elif player.state == PlayerState.FREE:
+		label_name.visible = false
+		label_desc.visible = false
+		player.current_interactable = null
+"
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_hjaqi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_4qnqm")
+
+[node name="Neck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00170171, -0.00133055)
+
+[node name="Camera3D" type="Camera3D" parent="Neck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.539086, -0.0011605)
+
+[node name="RayCast3D" type="RayCast3D" parent="Neck/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.760044)
+script = SubResource("GDScript_xo3ru")
+
+[node name="label_name" type="Label" parent="Neck/Camera3D/RayCast3D"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.389
+anchor_right = 0.5
+anchor_bottom = 0.389
+offset_left = -23.0
+offset_top = -47.072
+offset_right = 17.0
+offset_bottom = -24.072
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="label_desc" type="Label" parent="Neck/Camera3D/RayCast3D"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.432
+anchor_right = 0.5
+anchor_bottom = 0.432
+offset_left = -20.0
+offset_top = -29.936
+offset_right = 20.0
+offset_bottom = -6.936
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Marker3D" type="Marker3D" parent="Neck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.400494, -2.09366)
+
+[node name="cetrum" parent="Neck" node_paths=PackedStringArray("player", "shoot_marker", "camera_player") instance=ExtResource("1_xo3ru")]
+transform = Transform3D(1, 0, 0, 0, 0.694018, 0.719958, 0, -0.719958, 0.694018, -0.774923, -1.51104, 0.656254)
+player = NodePath("../..")
+shoot_marker = NodePath("../Marker3D")
+camera_player = NodePath("../Camera3D")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="hp_label" type="Label" parent="CanvasLayer"]
+offset_left = 979.0
+offset_top = 37.0
+offset_right = 1103.0
+offset_bottom = 108.0
+theme_override_font_sizes/font_size = 60
+text = "200"
+
+[node name="label" type="Label" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_right = 0.442
+anchor_bottom = 0.184
+offset_left = 900.0
+offset_top = 36.0
+offset_right = 430.816
+offset_bottom = -60.232
+theme_override_font_sizes/font_size = 40
+text = "HP"
