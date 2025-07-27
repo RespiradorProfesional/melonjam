@@ -6,6 +6,8 @@ var direction: Vector3 = Vector3.ZERO
 @onready var hit_box = $HitBox
 @export var knockback_strength : int
 @onready var timer: Timer = $Timer
+@onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
+
 
 var damage
 var cooldown
@@ -16,7 +18,7 @@ var projectile_duration
 func _ready():
 	if direction != Vector3.ZERO:
 		look_at(global_transform.origin + direction)
-	
+	audio_stream_player_3d.play()
 	var data_ability = GlobalDataUser.get_power_stats(power_name)
 	damage = data_ability["damage"]
 	area = data_ability["area"]
