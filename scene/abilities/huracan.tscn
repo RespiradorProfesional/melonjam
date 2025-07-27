@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dl6ns4frh8q8l"]
+[gd_scene load_steps=7 format=3 uid="uid://dl6ns4frh8q8l"]
 
 [ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_gd4wq"]
+[ext_resource type="AudioStream" uid="uid://8o7c2fvtdkeu" path="res://assets/sounds/external_sounds/351256__kinoton__deep-whoosh-1.wav" id="2_322o2"]
 
 [sub_resource type="GDScript" id="GDScript_gd4wq"]
 script/source = "extends Ability_base
@@ -48,3 +49,6 @@ one_shot = true
 explosiveness = 0.95
 process_material = SubResource("ParticleProcessMaterial_gd4wq")
 draw_pass_1 = SubResource("PlaneMesh_gd4wq")
+
+[node name="AudioStreamPlayer3D" parent="." index="3"]
+stream = ExtResource("2_322o2")

@@ -1,4 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ijabu3llcbq8"]
+[gd_scene load_steps=4 format=3 uid="uid://ijabu3llcbq8"]
+
+[ext_resource type="Script" uid="uid://da0x7j46ybb1e" path="res://scene/ui/buttons.gd" id="1_nvex0"]
+[ext_resource type="AudioStream" uid="uid://bfuhwr7y18vid" path="res://assets/sounds/external_sounds/577038__nezuai__ui-sound-3.wav" id="2_sx0s7"]
 
 [sub_resource type="GDScript" id="GDScript_0x673"]
 script/source = "extends Control
@@ -64,13 +67,20 @@ text = "0"
 layout_mode = 2
 theme_override_constants/separation = 50
 
-[node name="plus" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="plus" type="Button" parent="HBoxContainer/VBoxContainer" node_paths=PackedStringArray("audio_stream_player")]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+script = ExtResource("1_nvex0")
+audio_stream_player = NodePath("../../../AudioStreamPlayer")
 
-[node name="minus" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="minus" type="Button" parent="HBoxContainer/VBoxContainer" node_paths=PackedStringArray("audio_stream_player")]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+script = ExtResource("1_nvex0")
+audio_stream_player = NodePath("../../../AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_sx0s7")
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/plus" to="." method="_on_plus_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/minus" to="." method="_on_minus_pressed"]

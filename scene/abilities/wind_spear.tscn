@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://qgndxw1fae4f"]
+[gd_scene load_steps=8 format=3 uid="uid://qgndxw1fae4f"]
 
 [ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_j0ouw"]
 [ext_resource type="PackedScene" uid="uid://c8bujoyq0m74d" path="res://assets/3d/particles/black_laser.glb" id="2_otqdb"]
+[ext_resource type="AudioStream" uid="uid://3at87wx32i06" path="res://assets/sounds/external_sounds/683096__florianreichelt__woosh.mp3" id="3_hdgps"]
 
 [sub_resource type="GDScript" id="GDScript_j0ouw"]
 script/source = "extends Ability_base
@@ -60,3 +61,6 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 
 
 [node name="black_laser2" parent="." index="4" instance=ExtResource("2_otqdb")]
 transform = Transform3D(0.1, 0, 0, 0, -0.1, 1.50996e-08, 0, -1.50996e-08, -0.1, -0.164847, 0, -0.92177)
+
+[node name="AudioStreamPlayer3D" parent="." index="5"]
+stream = ExtResource("3_hdgps")

@@ -88,7 +88,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Marker3D" type="Marker3D" parent="Neck"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.400494, -2.09366)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.253661, -1.83185)
 
 [node name="cetrum" parent="Neck" node_paths=PackedStringArray("player", "shoot_marker", "camera_player") instance=ExtResource("1_xo3ru")]
 transform = Transform3D(1, 0, 0, 0, 0.694018, 0.719958, 0, -0.719958, 0.694018, -0.774923, -1.51104, 0.656254)

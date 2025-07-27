@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0cdgqt2j160b"]
+[gd_scene load_steps=5 format=3 uid="uid://b0cdgqt2j160b"]
 
 [ext_resource type="Texture2D" uid="uid://cxgupxk0imm2y" path="res://icon.svg" id="1_1g658"]
 
@@ -48,6 +48,12 @@ func _on_seconds_timer_timeout() -> void:
 	progress_bar.value-=1
 "
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1g658"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xup2b"]
+bg_color = Color(0.152941, 0.152941, 0.152941, 0.607843)
+
 [node name="Control" type="Control"]
 custom_minimum_size = Vector2(90, 70)
 layout_mode = 3
@@ -71,11 +77,14 @@ expand_mode = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 layout_mode = 0
-offset_left = 1.0
+offset_left = 9.0
 offset_top = -2.0
-offset_right = 91.0
+offset_right = 83.0
 offset_bottom = 68.0
+theme_override_styles/background = SubResource("StyleBoxFlat_1g658")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xup2b")
 fill_mode = 3
+show_percentage = false
 
 [node name="Timer" type="Timer" parent="."]
 

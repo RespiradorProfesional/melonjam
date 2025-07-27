@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://coc18a44rrwiw"]
+[gd_scene load_steps=7 format=3 uid="uid://coc18a44rrwiw"]
 
 [ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_ab20r"]
+[ext_resource type="AudioStream" uid="uid://dc5i5pfg8560d" path="res://assets/sounds/external_sounds/30935__aust_paul__possiblelazer.wav" id="2_n88hn"]
 
 [sub_resource type="GDScript" id="GDScript_ab20r"]
 script/source = "extends Ability_base
@@ -41,3 +42,6 @@ shape = SubResource("BoxShape3D_ab20r")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 56.1837, 0, 0.38921, -30.3962)
 mesh = SubResource("BoxMesh_ab20r")
+
+[node name="AudioStreamPlayer3D" parent="." index="3"]
+stream = ExtResource("2_n88hn")

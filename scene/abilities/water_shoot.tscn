@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjngkfyk2rh3l"]
+[gd_scene load_steps=10 format=3 uid="uid://bjngkfyk2rh3l"]
 
 [ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_w0pcj"]
+[ext_resource type="AudioStream" uid="uid://d1xlfaws4tojp" path="res://assets/sounds/external_sounds/398808__inspectorj__bubbling-large-a.wav" id="2_a1faq"]
 
 [sub_resource type="GDScript" id="GDScript_a1faq"]
 script/source = "extends Ability_base
@@ -58,3 +59,6 @@ draw_pass_1 = SubResource("SphereMesh_lgbbt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
 mesh = SubResource("SphereMesh_r3xp8")
+
+[node name="AudioStreamPlayer3D" parent="." index="4"]
+stream = ExtResource("2_a1faq")

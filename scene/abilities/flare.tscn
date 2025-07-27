@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cnggxsx5n0qn2"]
+[gd_scene load_steps=10 format=3 uid="uid://cnggxsx5n0qn2"]
 
 [ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_7tx4d"]
+[ext_resource type="AudioStream" uid="uid://dholq6wum6m3l" path="res://assets/sounds/external_sounds/133901__audionautics__lava-loop.wav" id="2_jxt6x"]
 
 [sub_resource type="GDScript" id="GDScript_7tx4d"]
 script/source = "extends Ability_base
@@ -72,3 +73,6 @@ amount = 200
 lifetime = 1.25
 process_material = SubResource("ParticleProcessMaterial_bq68h")
 draw_pass_1 = SubResource("SphereMesh_23tko")
+
+[node name="AudioStreamPlayer3D" parent="." index="3"]
+stream = ExtResource("2_jxt6x")

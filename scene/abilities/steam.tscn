@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c70l6btgj50p2"]
+[gd_scene load_steps=8 format=3 uid="uid://c70l6btgj50p2"]
 
 [ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_kvavk"]
+[ext_resource type="AudioStream" uid="uid://bmi51lroo1yls" path="res://assets/sounds/external_sounds/195712__ilame__smoke.wav" id="2_qq401"]
 
 [sub_resource type="GDScript" id="GDScript_kvavk"]
 script/source = "extends Ability_base
@@ -69,3 +70,6 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_kvavk")
 draw_pass_1 = SubResource("SphereMesh_qq401")
+
+[node name="AudioStreamPlayer3D" parent="." index="3"]
+stream = ExtResource("2_qq401")
