@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjngkfyk2rh3l"]
+[gd_scene load_steps=9 format=3 uid="uid://bjngkfyk2rh3l"]
 
 [ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_w0pcj"]
-[ext_resource type="PackedScene" uid="uid://cbw83ky12wd3d" path="res://assets/3d/particles/wind_spear.glb" id="2_a1faq"]
 
 [sub_resource type="GDScript" id="GDScript_a1faq"]
 script/source = "extends Ability_base
@@ -26,11 +25,23 @@ gravity = Vector3(0, -2, 3)
 hue_variation_min = -0.28
 hue_variation_max = 0.18
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w0pcj"]
+albedo_color = Color(0.294118, 0.847059, 0.847059, 1)
+
 [sub_resource type="SphereMesh" id="SphereMesh_lgbbt"]
+material = SubResource("StandardMaterial3D_w0pcj")
 radius = 0.15
 height = 0.3
 radial_segments = 4
 rings = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a1faq"]
+albedo_color = Color(3.36915e-07, 0.548313, 0.548725, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_r3xp8"]
+material = SubResource("StandardMaterial3D_a1faq")
+radial_segments = 4
+rings = 2
 
 [node name="Node3D" instance=ExtResource("1_w0pcj")]
 script = SubResource("GDScript_a1faq")
@@ -45,5 +56,5 @@ amount = 20
 process_material = SubResource("ParticleProcessMaterial_r3xp8")
 draw_pass_1 = SubResource("SphereMesh_lgbbt")
 
-[node name="wind_spear2" parent="." index="3" instance=ExtResource("2_a1faq")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.00540292, 0, -0.0252513)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
+mesh = SubResource("SphereMesh_r3xp8")

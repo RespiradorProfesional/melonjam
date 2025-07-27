@@ -24,3 +24,5 @@ shape = SubResource("SphereShape3D_fjfyr")
 
 [node name="flare2" parent="." index="2" instance=ExtResource("2_gyeba")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.0143209, -0.22262, -0.00407553)
+
+[editable path="flare2"]

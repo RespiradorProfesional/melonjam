@@ -5,6 +5,7 @@ var direction: Vector3 = Vector3.ZERO
 @export var power_name : String
 @onready var hit_box = $HitBox
 @export var knockback_strength : int
+@onready var timer: Timer = $Timer
 
 var damage
 var cooldown
@@ -20,6 +21,8 @@ func _ready():
 	damage = data_ability["damage"]
 	area = data_ability["area"]
 	projectile_duration = data_ability["projectile_duration"]
+	timer.wait_time=projectile_duration
+	timer.start()
 	custom_ready()
 func custom_ready():
 	pass
@@ -44,3 +47,7 @@ func _on_hit_box_body_entered(body: Node3D) -> void:
 func _on_hit_box_body_exited(body: Node3D) -> void:
 	if body is Enemy:
 		pass # Replace with function body.
+
+
+func _on_timer_timeout() -> void:
+	queue_free()

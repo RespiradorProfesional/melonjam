@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://coc18a44rrwiw"]
+[gd_scene load_steps=6 format=3 uid="uid://coc18a44rrwiw"]
 
 [ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_ab20r"]
 
@@ -17,7 +17,14 @@ func _on_hit_box_body_entered(body: Node3D) -> void:
 [sub_resource type="BoxShape3D" id="BoxShape3D_ab20r"]
 size = Vector3(1, 1, 55.9016)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ab20r"]
+transparency = 1
+albedo_color = Color(0.541419, 0.00248143, 0.80798, 1)
+emission_enabled = true
+emission = Color(0.547573, 0.181794, 0.674479, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_ab20r"]
+material = SubResource("StandardMaterial3D_ab20r")
 
 [node name="Node3D" instance=ExtResource("1_ab20r")]
 script = SubResource("GDScript_ab20r")

@@ -53,80 +53,71 @@ func generate_upgrade_labels(upgrade_data: Array, parent: Node) -> void:
 "
 
 [node name="Control" type="Control"]
-custom_minimum_size = Vector2(174, 267)
+custom_minimum_size = Vector2(250, 360)
 layout_mode = 3
 anchor_left = 0.044
 anchor_top = 0.034
-anchor_right = 0.195
-anchor_bottom = 0.446
-offset_left = 0.311996
-offset_top = -0.0320015
-offset_right = 0.359985
-offset_bottom = -0.00799561
+anchor_right = 0.188
+anchor_bottom = 0.453
+offset_left = -24.48
+offset_top = -22.72
+offset_right = -50.96
+offset_bottom = -115.24
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_vcboc")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 2.0
-offset_bottom = 3.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.446777, 0.446777, 0.446777, 1)
-
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 19.0
-offset_top = 131.0
-offset_right = 159.0
-offset_bottom = 158.0
+offset_left = 11.0
+offset_top = 154.0
+offset_right = 240.0
+offset_bottom = 198.0
+alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(30, 40)
 layout_mode = 2
 expand_mode = 1
 
 [node name="TextureRect2" type="TextureRect" parent="HBoxContainer"]
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(30, 40)
 layout_mode = 2
 expand_mode = 1
 
 [node name="TextureRect3" type="TextureRect" parent="HBoxContainer"]
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(30, 40)
 layout_mode = 2
 expand_mode = 1
 
 [node name="TextureRect4" type="TextureRect" parent="HBoxContainer"]
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(30, 40)
 layout_mode = 2
 expand_mode = 1
 
 [node name="TextureRect5" type="TextureRect" parent="HBoxContainer"]
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(30, 40)
 layout_mode = 2
 expand_mode = 1
 
 [node name="TextureRect6" type="TextureRect" parent="HBoxContainer"]
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(30, 40)
 layout_mode = 2
 expand_mode = 1
 
 [node name="UpgradeContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 2.00002
-offset_top = 168.0
-offset_right = 171.0
-offset_bottom = 211.0
+offset_left = 7.0
+offset_top = 201.0
+offset_right = 239.0
+offset_bottom = 260.0
+alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 46.0
-offset_top = 18.0
-offset_right = 130.0
-offset_bottom = 102.0
+offset_left = 61.0
+offset_top = 19.0
+offset_right = 178.0
+offset_bottom = 136.0
 texture = ExtResource("1_mytgs")
 expand_mode = 1

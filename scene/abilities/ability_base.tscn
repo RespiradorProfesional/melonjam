@@ -12,3 +12,4 @@ power_name = "fire_tornado"
 
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
 [connection signal="body_exited" from="HitBox" to="." method="_on_hit_box_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

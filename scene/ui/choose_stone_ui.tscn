@@ -19,16 +19,16 @@ func _ready() -> void:
 func _on_minus_pressed() -> void:
 	if actual_amount <= 0:
 		return
-	change.emit()
 	actual_amount-=1
+	change.emit()
 	label_actual.text = str(actual_amount)
 
 
 func _on_plus_pressed() -> void:
 	if actual_amount >= GlobalDataUser.get_actual_amount_element(stone_name):
 		return
-	change.emit()
 	actual_amount+=1
+	change.emit()
 	label_actual.text = str(actual_amount)
 "
 

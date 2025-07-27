@@ -46,10 +46,11 @@ gravity = Vector3(0, 0, 0)
 scale_max = 2.0
 scale_curve = SubResource("CurveTexture_jxt6x")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7tx4d"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7tx4d"]
+albedo_color = Color(0.930475, 0.117566, 1.92523e-07, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_23tko"]
-material = SubResource("ShaderMaterial_7tx4d")
+material = SubResource("StandardMaterial3D_7tx4d")
 radius = 0.05
 height = 0.1
 radial_segments = 4

@@ -98,9 +98,21 @@ camera_player = NodePath("../Camera3D")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer"]
-offset_left = 1074.0
-offset_top = 155.0
-offset_right = 1114.0
-offset_bottom = 506.0
-fill_mode = 3
+[node name="hp_label" type="Label" parent="CanvasLayer"]
+offset_left = 979.0
+offset_top = 37.0
+offset_right = 1103.0
+offset_bottom = 108.0
+theme_override_font_sizes/font_size = 60
+text = "200"
+
+[node name="label" type="Label" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_right = 0.442
+anchor_bottom = 0.184
+offset_left = 900.0
+offset_top = 36.0
+offset_right = 430.816
+offset_bottom = -60.232
+theme_override_font_sizes/font_size = 40
+text = "HP"

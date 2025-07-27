@@ -21,8 +21,8 @@ var powers_and_level = [
 
 var powers_data = {
 	"basic_projectile": {
-		1: {"damage": 15, "cooldown": 3.0, "projectile_duration": 1.0, "area": 100.0, "upgrade_item": [{"type": "fire", "amount": 2}]},
-		2: {"damage": 20, "cooldown": 1, "projectile_duration": 1.1, "area": 100.1, "upgrade_item": [{"type": "water", "amount": 5}]},
+		1: {"damage": 15, "cooldown": 3, "projectile_duration": 1.0, "area": 100.0, "upgrade_item": [{"type": "fire", "amount": 2}]},
+		2: {"damage": 20, "cooldown": 2, "projectile_duration": 1.1, "area": 100.1, "upgrade_item": [{"type": "water", "amount": 5}]},
 		3: {"damage": 25, "cooldown": 1.8, "projectile_duration": 1.2, "area": 1.2, "upgrade_item": [{"type": "wind", "amount": 7}]},
 		4: {"damage": 32, "cooldown": 1.7, "projectile_duration": 1.3, "area": 1.3, "upgrade_item": [{"type": "fire", "amount": 10}]},
 		5: {"damage": 40, "cooldown": 1.5, "projectile_duration": 1.4, "area": 1.4, "upgrade_item": [{"type": "water", "amount": 15}]},
@@ -48,7 +48,7 @@ var powers_data = {
 	},
 	"water_shoot": {
 		0: {"upgrade_item": [{"type": "water", "amount": 3}]},
-		1: {"damage": 14, "cooldown": 1.7, "projectile_duration": 1.0, "area": 1.0, "upgrade_item": [{"type": "water", "amount": 5}]},
+		1: {"damage": 100, "cooldown": 1.7, "projectile_duration": 1.0, "area": 1.0, "upgrade_item": [{"type": "water", "amount": 5}]},
 		2: {"damage": 19, "cooldown": 1.5, "projectile_duration": 1.1, "area": 1.1, "upgrade_item": [{"type": "water", "amount": 7}]},
 		3: {"damage": 25, "cooldown": 1.4, "projectile_duration": 1.2, "area": 1.2, "upgrade_item": [{"type": "water", "amount": 10}]},
 		4: {"damage": 30, "cooldown": 1.3, "projectile_duration": 1.3, "area": 1.3, "upgrade_item": [{"type": "water", "amount": 13}]},
@@ -324,6 +324,20 @@ func get_actual_amount_element(name: String) -> int:
 			push_error("Elemento desconocido: %s" % name)
 			return -1
 
+func add_elemnt(name: String):
+	match name:
+		"fire":
+			fire_amount+=1
+		"wind":
+			wind_amount+=1
+		"water":
+			water_amount+=1
+		"nothing":
+			pass
+		_:
+			push_error("Elemento desconocido: %s" % name)
+			return
+
 func get_most_demanding_upgrade_power(max_fire: int, max_wind: int, max_water: int) -> String:
 	var best_power = ""
 	var highest_cost = -1
@@ -368,3 +382,16 @@ func get_most_demanding_upgrade_power(max_fire: int, max_wind: int, max_water: i
 			best_power = power_name
 
 	return best_power
+
+var world_levels = {
+	0: {"gnomes": 10, "minotaurs": 0},
+	1: {"gnomes": 12, "minotaurs": 1},
+	2: {"gnomes": 14, "minotaurs": 2},
+	3: {"gnomes": 15, "minotaurs": 3},
+	4: {"gnomes": 13, "minotaurs": 5},
+	5: {"gnomes": 10, "minotaurs": 7},
+	6: {"gnomes": 8, "minotaurs": 10},
+	7: {"gnomes": 6, "minotaurs": 13},
+	8: {"gnomes": 4, "minotaurs": 16},
+	9: {"gnomes": 2, "minotaurs": 20}
+}

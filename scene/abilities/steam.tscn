@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c70l6btgj50p2"]
+[gd_scene load_steps=7 format=3 uid="uid://c70l6btgj50p2"]
 
 [ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_kvavk"]
 
@@ -38,7 +38,11 @@ linear_accel_max = -5.75
 hue_variation_min = -0.28
 hue_variation_max = 0.18
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kvavk"]
+albedo_color = Color(0.344076, 0.344076, 0.344076, 0.713726)
+
 [sub_resource type="SphereMesh" id="SphereMesh_qq401"]
+material = SubResource("StandardMaterial3D_kvavk")
 radius = 2.0
 height = 7.0
 radial_segments = 4

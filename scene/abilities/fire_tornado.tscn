@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bcl0pxgbfybcq"]
+[gd_scene load_steps=12 format=3 uid="uid://bcl0pxgbfybcq"]
 
 [ext_resource type="PackedScene" uid="uid://ji0sp8mtxerw" path="res://scene/abilities/ability_base.tscn" id="1_7xkfx"]
 [ext_resource type="Shader" uid="uid://us0rn3anh4le" path="res://fire.gdshader" id="2_u44ei"]
@@ -44,26 +44,40 @@ shader_parameter/upward_speed = 1.0
 shader_parameter/base_radius = 1.0
 shader_parameter/profile = SubResource("CurveTexture_0m61v")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u44ei"]
+albedo_color = Color(0.941176, 0.164706, 0.105882, 1)
+
 [sub_resource type="SphereMesh" id="SphereMesh_u44ei"]
+material = SubResource("StandardMaterial3D_u44ei")
 radius = 0.15
 height = 0.3
 radial_segments = 5
 rings = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0m61v"]
+albedo_color = Color(0.828386, 0.781091, 0.181408, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_k2apo"]
+material = SubResource("StandardMaterial3D_0m61v")
 
 [node name="Node3D" instance=ExtResource("1_7xkfx")]
 script = SubResource("GDScript_u44ei")
 speed = 1.0
 
 [node name="HitBox" parent="." index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0382388)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01846, 0.0382388)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.796871, 0)
 shape = SubResource("CapsuleShape3D_u44ei")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="." index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0534077, 0, -0.00947523)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0534077, -1.01846, -0.00947523)
 amount = 700
 lifetime = 3.0
 process_material = SubResource("ShaderMaterial_0m61v")
 draw_pass_1 = SubResource("SphereMesh_u44ei")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.00104, 0)
+mesh = SubResource("SphereMesh_k2apo")

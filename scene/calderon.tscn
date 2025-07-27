@@ -1,12 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjltvpbwxjjmw"]
+[gd_scene load_steps=5 format=3 uid="uid://cjltvpbwxjjmw"]
 
 [ext_resource type="PackedScene" uid="uid://ddxn7k23epob" path="res://assets/3d/Cauldron.glb" id="1_j232t"]
+[ext_resource type="AudioStream" uid="uid://bs4183dnt0lbp" path="res://assets/sounds/mixing inside.wav" id="2_tbltr"]
 
 [sub_resource type="GDScript" id="GDScript_oc6q8"]
 script/source = "extends Interactable
 
+@onready var mix: AudioStreamPlayer3D = $mix
+
 var interface_ins
 func interact(player):
+	mix.play()
 	current_player = player
 	current_player.set_state(Player.PlayerState.INTERACTING)
 	interface_ins = load(\"res://scene/ui/cauldron_ui.tscn\").instantiate()
@@ -37,3 +41,6 @@ shape = SubResource("BoxShape3D_j232t")
 
 [node name="Cauldron2" parent="." instance=ExtResource("1_j232t")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.15845, 0, -0.191913)
+
+[node name="mix" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_tbltr")

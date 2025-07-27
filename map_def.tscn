@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bosm4h5kbqnxr"]
+
+[ext_resource type="MeshLibrary" uid="uid://cy0ifq3t3by45" path="res://config_map/Tilemap_def.tres" id="1_iuw7p"]
+[ext_resource type="PackedScene" uid="uid://c25vw82fm2k5h" path="res://scene/player.tscn" id="2_dtjbq"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("1_iuw7p")
+cell_size = Vector3(10, 10, 10)
+cell_center_x = false
+cell_center_y = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(0, 0, 21)
+}
+metadata/_editor_floor_ = Vector3(0, 1, 0)
+
+[node name="Player" parent="." instance=ExtResource("2_dtjbq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.6613, 0)

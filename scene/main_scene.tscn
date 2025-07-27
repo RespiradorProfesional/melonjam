@@ -1,24 +1,109 @@
-[gd_scene load_steps=6 format=3 uid="uid://ix3oqybm0ihu"]
+[gd_scene load_steps=9 format=3 uid="uid://ix3oqybm0ihu"]
 
 [ext_resource type="PackedScene" uid="uid://dohqbrg5yovkv" path="res://scene/map_main_scene.tscn" id="1_wgwml"]
 [ext_resource type="PackedScene" uid="uid://c25vw82fm2k5h" path="res://scene/player.tscn" id="2_ry1uq"]
 [ext_resource type="PackedScene" uid="uid://dl5sy47tmvybx" path="res://scene/enemies/gnome_base.tscn" id="3_fb1ex"]
 [ext_resource type="PackedScene" uid="uid://bvwx2mqgnmsgx" path="res://scene/interactable/book.tscn" id="4_x5n27"]
 [ext_resource type="PackedScene" uid="uid://cjltvpbwxjjmw" path="res://scene/calderon.tscn" id="5_jsie2"]
+[ext_resource type="PackedScene" uid="uid://ckap7dhenbghh" path="res://scene/enemies/tauro_base.tscn" id="6_jsie2"]
+[ext_resource type="PackedScene" uid="uid://blxuxhjgb26u2" path="res://scene/interactable/door_change_scene.tscn" id="7_qvu5t"]
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="GDScript" id="GDScript_x5n27"]
+script/source = "extends Node3D
+
+@export var gnome_scene: PackedScene
+@export var minotaur_scene: PackedScene
+@onready var player = $player
+
+var actual_level = 0
+var markers: Array[Marker3D] = []
+var enemies_alive := 0
+
+signal finish_round()
+
+func _ready() -> void:
+	# Obtiene todos los Marker3D dentro del nodo $markers_spawn
+	for child in $markers_spawn.get_children():
+		if child is Marker3D:
+			markers.append(child)
+
+
+func spawn_enemies():
+	var config = GlobalDataUser.world_levels.get(actual_level, {})
+	var total_gnomes = config.get(\"gnomes\", 0)
+	var total_minotaurs = config.get(\"minotaurs\", 0)
+
+	for i in total_gnomes:
+		spawn_enemy(gnome_scene)
+
+	for i in total_minotaurs:
+		spawn_enemy(minotaur_scene)
+
+func spawn_enemy(scene: PackedScene):
+	var instance = scene.instantiate()
+	instance.player=player
+	var marker = markers.pick_random()
+	
+	# Pequeña variación aleatoria de posición para evitar colisiones exactas
+	var offset = Vector3(
+		randf_range(-1.0, 1.0),
+		0,
+		randf_range(-1.0, 1.0)
+	)
+	add_child(instance)
+	instance.global_transform.origin = marker.global_transform.origin + offset
+
+
+	enemies_alive += 1
+	if instance.has_signal(\"enemy_died\"):
+		instance.connect(\"enemy_died\", Callable(self, \"_on_enemy_died\"))
+
+func _on_enemy_died():
+	enemies_alive -= 1
+	if enemies_alive <= 0:
+		on_all_enemies_dead()
+
+func on_all_enemies_dead():
+	actual_level+=1
+	finish_round.emit()
+	print(\"¡Todos los enemigos han sido derrotados!\")
+	# Aquí puedes cargar un nuevo nivel, mostrar un mensaje, etc.
+"
+
+[node name="game" type="Node3D"]
+script = SubResource("GDScript_x5n27")
+gnome_scene = ExtResource("3_fb1ex")
+minotaur_scene = ExtResource("6_jsie2")
 
 [node name="map" parent="." instance=ExtResource("1_wgwml")]
 
 [node name="player" parent="." instance=ExtResource("2_ry1uq")]
-transform = Transform3D(0.992923, 0, 0, 0, 0.992923, 0, 0, 0, 0.992923, 13.4435, 6.65617, 0)
+transform = Transform3D(0.992923, 0, 0, 0, 0.992923, 0, 0, 0, 0.992923, 8.32759, 6.65617, 0)
 
-[node name="enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_fb1ex")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5897, 0, -13.9225)
-player = NodePath("../player")
-
-[node name="Node3D" parent="." instance=ExtResource("4_x5n27")]
+[node name="book" parent="." instance=ExtResource("4_x5n27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.0712, 0, 0)
 
 [node name="Calderon" parent="." instance=ExtResource("5_jsie2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.3474, 0, 0)
+
+[node name="markers_spawn" type="Node3D" parent="."]
+
+[node name="Marker3D" type="Marker3D" parent="markers_spawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7639, 2.14141, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="markers_spawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.3394, 2.23661, 9.3076)
+
+[node name="Marker3D3" type="Marker3D" parent="markers_spawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2825, 2.60288, -7.5325)
+
+[node name="Marker3D4" type="Marker3D" parent="markers_spawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4049, 2.73121, 0)
+
+[node name="Marker3D5" type="Marker3D" parent="markers_spawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.2908, 2.11408, 6.28329)
+
+[node name="door" parent="." node_paths=PackedStringArray("game") instance=ExtResource("7_qvu5t")]
+game = NodePath("..")
+
+[connection signal="finish_round" from="." to="door" method="_on_game_finish_round"]
