@@ -132,14 +132,15 @@ func interaction():
 			current_interactable.detach()
 
 func hit(from_position: Vector3, damage: int = 10, knockback_strength: float = 5.0):
-	update_hp(hp - damage)
 	
-	print("hit! hp =", hp)
+	
+	print("hit! hp =", hp, "damage = " , damage)
 	camera_shake_timer = camera_shake_duration
 	# Calcular dirección de knockback
 	var dir = (global_position - from_position).normalized()
 	knockback_velocity = dir * knockback_strength
 	knockback_timer = knockback_duration
+	update_hp(hp - damage)
 
 func camera_shake(delta):
 	if camera_shake_timer > 0:
@@ -154,5 +155,13 @@ func camera_shake(delta):
 		camera.position = original_camera_position
 
 func update_hp(new_hp):
+	if new_hp<=0:
+		call_deferred("change_scene_deferred")
 	hp=new_hp
 	hp_label.text = str(new_hp)
+
+
+
+func change_scene_deferred():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	get_tree().change_scene_to_file("res://scene/ui/defeat_screen.tscn")

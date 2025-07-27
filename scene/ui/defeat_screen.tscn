@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5wo54mcackqi"]
+
+[sub_resource type="GDScript" id="GDScript_b2tk8"]
+script/source = "extends Control
+
+
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://scene/ui/main_ui.tscn\")
+"
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_b2tk8")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 752.0
+offset_top = 780.0
+offset_right = 1321.0
+offset_bottom = 871.0
+theme_override_font_sizes/font_size = 60
+text = "Back to main menu"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

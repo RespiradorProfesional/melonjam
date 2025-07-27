@@ -6,16 +6,16 @@ var water_amount=1000
 
 
 
-var active_powers=["basic_projectile","steam","flare","huracan","black_laser","wind_spear","fire_tornado","water_shoot"]
+var active_powers=["basic_projectile"]
 var powers_and_level = [
 	{"power": "basic_projectile", "level": 1},
-	{"power": "flare", "level": 1},
-	{"power": "wind_spear", "level": 1},
-	{"power": "water_shoot", "level": 1},
-	{"power": "steam", "level": 1},
-	{"power": "fire_tornado", "level": 1},
-	{"power": "huracan", "level": 1},
-	{"power": "black_laser", "level": 1}
+	{"power": "flare", "level": 0},
+	{"power": "wind_spear", "level": 0},
+	{"power": "water_shoot", "level": 0},
+	{"power": "steam", "level": 0},
+	{"power": "fire_tornado", "level": 0},
+	{"power": "huracan", "level": 0},
+	{"power": "black_laser", "level": 0}
 ]
 
 

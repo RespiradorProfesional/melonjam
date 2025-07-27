@@ -6,6 +6,7 @@
 [node name="Node3D" type="Node3D"]
 
 [node name="GridMap" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.15575, -1.39978, -4.8093)
 mesh_library = ExtResource("1_iuw7p")
 cell_size = Vector3(10, 10, 10)
 cell_center_x = false
